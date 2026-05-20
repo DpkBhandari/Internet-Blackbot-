@@ -17,6 +17,7 @@ interface AuthState {
   user: User | null;
   accessToken: string | null;
   status: AuthStatus;
+  setUser: (user: User | null) => void;
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -30,23 +31,37 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       accessToken: null,
       status: "idle",
-
+      setUser: (user) => set({ user }),
       login: async (email, password) => {
         set({ status: "loading" });
         const r = await api.post(endpoints.auth.login, { email, password });
-        set({ user: r.data.user, accessToken: r.data.accessToken, status: "authenticated" });
+        set({
+          user: r.data.user,
+          accessToken: r.data.accessToken,
+          status: "authenticated",
+        });
       },
 
       register: async (name, email, password) => {
         set({ status: "loading" });
-        const r = await api.post(endpoints.auth.register, { name, email, password });
-        set({ user: r.data.user, accessToken: r.data.accessToken, status: "authenticated" });
+        const r = await api.post(endpoints.auth.register, {
+          name,
+          email,
+          password,
+        });
+        set({
+          user: r.data.user,
+          accessToken: r.data.accessToken,
+          status: "authenticated",
+        });
       },
 
       logout: async () => {
         try {
           await api.post(endpoints.auth.logout);
-        } catch { /* ignore */ }
+        } catch {
+          /* ignore */
+        }
         set({ user: null, accessToken: null, status: "unauthenticated" });
       },
 
@@ -57,7 +72,10 @@ export const useAuthStore = create<AuthState>()(
 
       fetchMe: async () => {
         const { accessToken } = get();
-        if (!accessToken) { set({ status: "unauthenticated" }); return; }
+        if (!accessToken) {
+          set({ status: "unauthenticated" });
+          return;
+        }
         try {
           set({ status: "loading" });
           const r = await api.get(endpoints.auth.me);
@@ -77,6 +95,6 @@ export const useAuthStore = create<AuthState>()(
           state!.status = "unauthenticated";
         }
       },
-    }
-  )
+    },
+  ),
 );

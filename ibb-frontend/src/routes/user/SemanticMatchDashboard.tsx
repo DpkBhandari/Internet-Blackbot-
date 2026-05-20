@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/Badge";
 
 export default function SemanticMatchDashboard() {
   const [text, setText] = useState("");
-  const m = useMutation({ mutationFn: async () => (await api.post(endpoints.analysis.semantic, { text })).data });
+  const m = useMutation({ mutationFn: async () => (await api.post(endpoints.analyses.semantic, { text })).data });
   return (
     <div>
       <PageHeader title="Semantic Match" description="Find semantically similar passages across your documents and the web." />
@@ -22,7 +22,7 @@ export default function SemanticMatchDashboard() {
           {m.data.matches?.map((it: any, i: number) => (
             <Card key={i}><CardBody>
               <div className="flex items-center gap-2 mb-1">
-                <Badge tone="brand">{Math.round(it.score * 100)}% match</Badge>
+                <Badge variant="brand">{Math.round(it.score * 100)}% match</Badge>
                 {it.source && <span className="text-xs text-muted">{it.source}</span>}
               </div>
               <p className="text-sm">{it.text}</p>

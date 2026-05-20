@@ -23,7 +23,7 @@ export default function FactCheckCenter() {
         {m.data && (
           <div className="mt-6 space-y-3">
             <div className="flex items-center gap-2">
-              <Badge tone={m.data.verdict === "true" ? "success" : m.data.verdict === "false" ? "danger" : "warning"}>Verdict: {m.data.verdict}</Badge>
+              <Badge variant={m.data.verdict === "true" ? "success" : m.data.verdict === "false" ? "danger" : "warning"}>Verdict: {m.data.verdict}</Badge>
               <span className="text-sm text-muted">Confidence {Math.round((m.data.confidence || 0) * 100)}%</span>
             </div>
             <p className="text-sm">{m.data.explanation}</p>

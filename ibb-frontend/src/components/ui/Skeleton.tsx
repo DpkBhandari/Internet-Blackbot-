@@ -1,9 +1,19 @@
 import { cn } from "@/lib/utils";
+import type { CSSProperties } from "react";
 
-interface Props { className?: string; count?: number; }
+interface Props {
+  className?: string;
+  count?: number;
+  style?: CSSProperties;
+}
 
-export function Skeleton({ className }: { className?: string }) {
-  return <div className={cn("shimmer rounded-lg", className)} />;
+export function Skeleton({ className, style }: Props) {
+  return (
+    <div
+      style={style}
+      className={cn("shimmer rounded-lg", className)}
+    />
+  );
 }
 
 export function SkeletonCard() {
@@ -16,6 +26,7 @@ export function SkeletonCard() {
           <Skeleton className="h-3 w-1/3" />
         </div>
       </div>
+
       <Skeleton className="h-3 w-full" />
       <Skeleton className="h-3 w-4/5" />
     </div>
@@ -27,13 +38,25 @@ export function SkeletonTable({ rows = 5 }: { rows?: number }) {
     <div className="rounded-xl border border-border bg-surface overflow-hidden">
       <div className="p-4 border-b border-border flex gap-4">
         {[40, 25, 20, 15].map((w, i) => (
-          <Skeleton key={i} className={`h-4`} style={{ width: `${w}%` }} />
+          <Skeleton
+            key={i}
+            className="h-4"
+            style={{ width: `${w}%` }}
+          />
         ))}
       </div>
+
       {Array.from({ length: rows }).map((_, i) => (
-        <div key={i} className="p-4 border-b border-border last:border-0 flex gap-4">
+        <div
+          key={i}
+          className="p-4 border-b border-border last:border-0 flex gap-4"
+        >
           {[40, 25, 20, 15].map((w, j) => (
-            <Skeleton key={j} className="h-3" style={{ width: `${w}%` }} />
+            <Skeleton
+              key={j}
+              className="h-3"
+              style={{ width: `${w}%` }}
+            />
           ))}
         </div>
       ))}

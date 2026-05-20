@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/Badge";
 import { QueryView } from "@/components/feature/QueryView";
 
 export default function MisinformationTracker() {
-  const q = useQuery({ queryKey: ["misinformation"], queryFn: async () => (await api.get<any[]>(endpoints.analysis.misinformation)).data });
+  const q = useQuery({ queryKey: ["misinformation"], queryFn: async () => (await api.get<any[]>(endpoints.analyses.misinformation)).data });
   return (
     <div>
       <PageHeader title="Misinformation Tracker" description="Flagged claims with credibility scoring and counter-evidence." />
@@ -18,7 +18,7 @@ export default function MisinformationTracker() {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <Badge tone={m.score < 30 ? "danger" : m.score < 60 ? "warning" : "success"}>Credibility {m.score}/100</Badge>
+                      <Badge variant={m.score < 30 ? "danger" : m.score < 60 ? "warning" : "success"}>Credibility {m.score}/100</Badge>
                       {m.tags?.map((t: string) => <Badge key={t}>{t}</Badge>)}
                     </div>
                     <p className="font-medium">"{m.claim}"</p>

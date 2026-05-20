@@ -25,7 +25,7 @@ export default function ResearchExplorer() {
             {items.map((r) => (
               <Card key={r.id}><CardBody>
                 <div className="flex items-center gap-2 mb-2">
-                  <Badge tone="brand">{r.year}</Badge>
+                  <Badge variant="brand">{r.year}</Badge>
                   <span className="text-xs text-muted">{r.venue}</span>
                 </div>
                 <h3 className="font-display font-semibold">{r.title}</h3>

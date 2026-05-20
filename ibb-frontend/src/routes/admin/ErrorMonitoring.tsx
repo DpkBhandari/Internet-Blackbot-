@@ -17,7 +17,7 @@ export default function ErrorMonitoring() {
             {items.map((e) => (
               <Card key={e.id}><CardBody>
                 <div className="flex items-center gap-2 mb-1">
-                  <Badge tone="danger">{e.level}</Badge>
+                  <Badge variant="danger">{e.level}</Badge>
                   <span className="text-xs text-muted">{e.service} · {formatDate(e.createdAt)}</span>
                 </div>
                 <p className="font-mono text-sm">{e.message}</p>

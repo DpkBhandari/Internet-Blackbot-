@@ -17,7 +17,7 @@ export default function LogsViewer() {
               {items.map((l) => (
                 <div key={l.id} className="px-4 py-1 border-b border-border flex gap-3">
                   <span className="text-muted shrink-0">{new Date(l.t).toISOString()}</span>
-                  <Badge tone={l.level === "error" ? "danger" : l.level === "warn" ? "warning" : "neutral"}>{l.level}</Badge>
+                  <Badge variant={l.level === "error" ? "danger" : l.level === "warn" ? "warning" : "default"}>{l.level}</Badge>
                   <span className="truncate">{l.msg}</span>
                 </div>
               ))}

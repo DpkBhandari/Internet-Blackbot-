@@ -35,7 +35,7 @@ export default function InviteManagement() {
                 {items.map((i) => (
                   <tr key={i.id} className="border-b border-border last:border-0">
                     <td className="p-3">{i.email}</td>
-                    <td className="p-3"><Badge tone={i.status === "accepted" ? "success" : "warning"}>{i.status}</Badge></td>
+                    <td className="p-3"><Badge variant={i.status === "accepted" ? "success" : "warning"}>{i.status}</Badge></td>
                     <td className="p-3 text-muted">{new Date(i.createdAt).toLocaleString()}</td>
                   </tr>
                 ))}

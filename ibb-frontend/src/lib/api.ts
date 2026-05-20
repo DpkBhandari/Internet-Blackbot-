@@ -57,11 +57,24 @@ export const endpoints = {
     create:       "/uploads",
     one:  (id: string) => `/uploads/${id}`,
   },
-  analyses: {
-    list:         "/analyses",
-    one:  (id: string) => `/analyses/${id}`,
-    summary: (id: string) => `/analyses/${id}/summary`,
-  },
+analyses: {
+  list:           "/analyses",
+  one:    (id: string) => `/analyses/${id}`,
+  summary:(id: string) => `/analyses/${id}/summary`,
+
+  sentiment:      "/analyses/sentiment",
+  trends:         "/analyses/trends",
+  credibility:    "/analyses/credibility",
+  misinformation: "/analyses/misinformation",
+  semantic:       "/analyses/semantic",
+},
+activity: "/activity",
+
+sources: {
+  list: "/sources",
+  citations: "/sources/citations",
+  factcheck: "/sources/factcheck",
+},
   reports: {
     list:         "/reports",
     create:       "/reports",
@@ -81,12 +94,16 @@ export const endpoints = {
   },
   search:           "/search",
   dashboard:        "/dashboard",
-  admin: {
-    stats:     "/admin/stats",
-    users:     "/admin/users",
-    invites:   "/admin/invites",
-    logs:      "/admin/logs",
-    health:    "/admin/health",
-    analytics: "/admin/analytics",
-  },
+ admin: {
+  stats:      "/admin/stats",
+  users:      "/admin/users",
+  invites:    "/admin/invites",
+  logs:       "/admin/logs",
+  health:     "/admin/health",
+  analytics:  "/admin/analytics",
+
+  apiMonitor: "/admin/api-monitor",
+  errors:     "/admin/errors",
+  moderation: "/admin/moderation",
+},
 };

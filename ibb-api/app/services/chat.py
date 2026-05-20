@@ -58,7 +58,7 @@ class ChatService:
 - **Summarizing** your uploaded documents
 - **Extracting keywords** and main topics
 - **Identifying claims** that need fact-checking
-- **Analyzing sentiment** and tone
+- **Analyzing sentiment** and variant
 - **Research questions** about any topic
 
 Upload a document first, then ask me specific questions about it!"""

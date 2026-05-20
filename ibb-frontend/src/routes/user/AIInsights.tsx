@@ -36,7 +36,7 @@ function deriveInsights(items: any[]): InsightCard[] {
   if (negCount > items.length * 0.6) {
     insights.push({ type: "pattern", title: "Predominantly Negative Corpus", body: `${negCount} of ${items.length} documents carry negative sentiment. This may indicate a bias toward adversarial or critical content. Consider balancing sources.`, severity: "medium" });
   } else if (posCount > items.length * 0.7) {
-    insights.push({ type: "anomaly", title: "Unusually Positive Corpus Tone", body: `${posCount} of ${items.length} documents are positive-sentiment. Verify sources are not promotional or biased toward favorable framing.`, severity: "medium" });
+    insights.push({ type: "anomaly", title: "Unusually Positive Corpus variant", body: `${posCount} of ${items.length} documents are positive-sentiment. Verify sources are not promotional or biased toward favorable framing.`, severity: "medium" });
   }
 
   // Keyword density

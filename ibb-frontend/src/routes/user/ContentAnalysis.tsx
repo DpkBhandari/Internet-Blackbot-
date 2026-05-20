@@ -17,7 +17,7 @@ interface AnalysisItem {
 export default function ContentAnalysis() {
   const { id } = useParams();
   if (id) return <Detail id={id} />;
-  const list = useQuery({ queryKey: ["analyses"], queryFn: async () => (await api.get<AnalysisItem[]>(endpoints.analysis.list)).data });
+  const list = useQuery({ queryKey: ["analyses"], queryFn: async () => (await api.get<AnalysisItem[]>(endpoints.analyses.list)).data });
   return (
     <div>
       <PageHeader title="Content Analysis" description="Detailed AI analysis of your uploaded documents." />
@@ -29,7 +29,7 @@ export default function ContentAnalysis() {
                 <Card className="hover:border-brand transition-colors h-full">
                   <CardBody>
                     <div className="flex items-center justify-between mb-2">
-                      <Badge tone={a.status === "completed" ? "success" : "warning"}>{a.status}</Badge>
+                      <Badge variant={a.status === "completed" ? "success" : "warning"}>{a.status}</Badge>
                       <span className="text-xs text-muted">{new Date(a.createdAt).toLocaleDateString()}</span>
                     </div>
                     <h3 className="font-display font-semibold">{a.title}</h3>
@@ -46,7 +46,7 @@ export default function ContentAnalysis() {
 }
 
 function Detail({ id }: { id: string }) {
-  const q = useQuery({ queryKey: ["analysis", id], queryFn: async () => (await api.get<any>(endpoints.analysis.one(id))).data });
+  const q = useQuery({ queryKey: ["analysis", id], queryFn: async () => (await api.get<any>(endpoints.analyses.one(id))).data });
   return (
     <div>
       <PageHeader title="Analysis" description={`ID: ${id}`} />
@@ -60,7 +60,7 @@ function Detail({ id }: { id: string }) {
             {d.keywords && (
               <Card><CardBody>
                 <h3 className="font-display font-semibold mb-3">Keywords</h3>
-                <div className="flex flex-wrap gap-2">{d.keywords.map((k: string) => <Badge key={k} tone="brand">{k}</Badge>)}</div>
+                <div className="flex flex-wrap gap-2">{d.keywords.map((k: string) => <Badge key={k} variant="brand">{k}</Badge>)}</div>
               </CardBody></Card>
             )}
             {d.entities && (

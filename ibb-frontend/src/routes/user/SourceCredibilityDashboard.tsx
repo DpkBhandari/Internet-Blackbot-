@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/Badge";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 
 export default function SourceCredibilityDashboard() {
-  const q = useQuery({ queryKey: ["credibility"], queryFn: async () => (await api.get<any>(endpoints.analysis.credibility)).data });
+  const q = useQuery({ queryKey: ["credibility"], queryFn: async () => (await api.get<any>(endpoints.analyses.credibility)).data });
   return (
     <div>
       <PageHeader title="Source Credibility" description="Domain reputation and citation patterns across your sources." />
@@ -32,7 +32,7 @@ export default function SourceCredibilityDashboard() {
                 {d.topSources?.map((s: any) => (
                   <li key={s.domain} className="py-2 flex items-center justify-between">
                     <span className="text-sm">{s.domain}</span>
-                    <Badge tone={s.score >= 70 ? "success" : s.score >= 40 ? "warning" : "danger"}>{s.score}</Badge>
+                    <Badge variant={s.score >= 70 ? "success" : s.score >= 40 ? "warning" : "danger"}>{s.score}</Badge>
                   </li>
                 ))}
               </ul>

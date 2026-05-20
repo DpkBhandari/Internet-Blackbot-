@@ -30,7 +30,7 @@ export default function UserManagement() {
                   <tr key={u.id} className="border-b border-border last:border-0">
                     <td className="p-3 font-medium">{u.name}</td>
                     <td className="p-3 text-muted">{u.email}</td>
-                    <td className="p-3"><Badge tone={u.role === "admin" ? "brand" : "neutral"}>{u.role}</Badge></td>
+                    <td className="p-3"><Badge variant={u.role === "admin" ? "brand" : "default"}>{u.role}</Badge></td>
                     <td className="p-3 text-muted">{formatDate(u.createdAt)}</td>
                     <td className="p-3 text-right">
                       <Button size="sm" variant="ghost" onClick={() => setRole.mutate({ id: u.id, role: u.role === "admin" ? "user" : "admin" })}>

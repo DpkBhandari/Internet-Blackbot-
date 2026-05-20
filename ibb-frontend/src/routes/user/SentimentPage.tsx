@@ -27,7 +27,7 @@ export default function SentimentPage() {
 
   if (!items.length) return (
     <div>
-      <PageHeader title="Sentiment Analysis" description="Emotional tone intelligence across your research corpus." />
+      <PageHeader title="Sentiment Analysis" description="Emotional variant intelligence across your research corpus." />
       <Empty icon={<Activity className="h-7 w-7 text-muted" />} title="No analyses yet" description="Upload and analyze documents to see sentiment data." />
     </div>
   );
@@ -59,7 +59,7 @@ export default function SentimentPage() {
 
   return (
     <div>
-      <PageHeader title="Sentiment Analysis" description="Emotional tone intelligence across your research corpus." badge={<Badge variant="brand">{items.length} documents</Badge>} />
+      <PageHeader title="Sentiment Analysis" description="Emotional variant intelligence across your research corpus." badge={<Badge variant="brand">{items.length} documents</Badge>} />
 
       {/* Score cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-5">

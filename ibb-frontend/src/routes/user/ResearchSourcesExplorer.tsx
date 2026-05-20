@@ -19,7 +19,7 @@ export default function ResearchSourcesExplorer() {
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <Badge tone={s.credibility >= 70 ? "success" : s.credibility >= 40 ? "warning" : "danger"}>Credibility {s.credibility}/100</Badge>
+                      <Badge variant={s.credibility >= 70 ? "success" : s.credibility >= 40 ? "warning" : "danger"}>Credibility {s.credibility}/100</Badge>
                       {s.similarity && <Badge>Similarity {Math.round(s.similarity * 100)}%</Badge>}
                     </div>
                     <h3 className="font-medium">{s.title}</h3>

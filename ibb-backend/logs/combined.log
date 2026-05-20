@@ -3,3 +3,28 @@
 {"level":"info","message":"Socket.IO initialized","timestamp":"2026-05-20 16:58:53"}
 {"level":"info","message":"BullMQ workers started","timestamp":"2026-05-20 16:58:53"}
 {"level":"info","message":"IBB Backend running on port 5000 (development)","timestamp":"2026-05-20 16:58:53"}
+{"level":"info","message":"MongoDB connected: ac-pqjikfh-shard-00-00.qlvsgkl.mongodb.net","timestamp":"2026-05-20 17:15:23"}
+{"level":"info","message":"Redis connected","timestamp":"2026-05-20 17:15:23"}
+{"level":"info","message":"Socket.IO initialized","timestamp":"2026-05-20 17:15:23"}
+{"level":"info","message":"BullMQ workers started","timestamp":"2026-05-20 17:15:23"}
+{"level":"info","message":"IBB Backend running on port 5000 (development)","timestamp":"2026-05-20 17:15:23"}
+{"level":"info","message":"MongoDB connected: ac-pqjikfh-shard-00-00.qlvsgkl.mongodb.net","timestamp":"2026-05-20 17:28:23"}
+{"level":"warn","message":"Redis connection failed: Connection is closed. — continuing without Redis","timestamp":"2026-05-20 17:28:23"}
+{"level":"info","message":"Socket.IO initialized","timestamp":"2026-05-20 17:28:23"}
+{"level":"warn","message":"Redis unavailable — BullMQ workers not started. Jobs will run synchronously.","timestamp":"2026-05-20 17:28:23"}
+{"level":"info","message":"IBB Backend running on port 5000 (production)","timestamp":"2026-05-20 17:28:23"}
+{"level":"info","message":"MongoDB connected: ac-pqjikfh-shard-00-00.qlvsgkl.mongodb.net","timestamp":"2026-05-20 17:30:27"}
+{"level":"info","message":"Redis connected","timestamp":"2026-05-20 17:30:28"}
+{"level":"info","message":"Socket.IO initialized","timestamp":"2026-05-20 17:30:28"}
+{"level":"info","message":"BullMQ workers started","timestamp":"2026-05-20 17:30:28"}
+{"level":"info","message":"IBB Backend running on port 5000 (production)","timestamp":"2026-05-20 17:30:28"}
+{"level":"info","message":"MongoDB connected: ac-pqjikfh-shard-00-00.qlvsgkl.mongodb.net","timestamp":"2026-05-20 18:15:24"}
+{"level":"info","message":"Redis connected","timestamp":"2026-05-20 18:15:25"}
+{"level":"info","message":"Socket.IO initialized","timestamp":"2026-05-20 18:15:25"}
+{"level":"info","message":"BullMQ workers started","timestamp":"2026-05-20 18:15:25"}
+{"level":"info","message":"IBB Backend running on port 5000 (production)","timestamp":"2026-05-20 18:15:25"}
+{"level":"info","message":"MongoDB connected: ac-pqjikfh-shard-00-00.qlvsgkl.mongodb.net","timestamp":"2026-05-20 18:33:58"}
+{"level":"info","message":"Redis connected","timestamp":"2026-05-20 18:33:59"}
+{"level":"info","message":"Socket.IO initialized","timestamp":"2026-05-20 18:33:59"}
+{"level":"info","message":"BullMQ workers started","timestamp":"2026-05-20 18:33:59"}
+{"level":"info","message":"IBB Backend running on port 5000 (production)","timestamp":"2026-05-20 18:33:59"}

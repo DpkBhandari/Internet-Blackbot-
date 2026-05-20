@@ -6,7 +6,7 @@ import { QueryView } from "@/components/feature/QueryView";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, PieChart, Pie, Cell, Legend } from "recharts";
 
 export default function SentimentVisualization() {
-  const q = useQuery({ queryKey: ["sentiment"], queryFn: async () => (await api.get<any>(endpoints.analysis.sentiment)).data });
+  const q = useQuery({ queryKey: ["sentiment"], queryFn: async () => (await api.get<any>(endpoints.analyses.sentiment)).data });
   const COLORS = ["rgb(var(--success))", "rgb(var(--muted))", "rgb(var(--danger))"];
   return (
     <div>

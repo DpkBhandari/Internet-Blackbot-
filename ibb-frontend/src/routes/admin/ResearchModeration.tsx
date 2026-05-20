@@ -24,7 +24,7 @@ export default function ResearchModeration() {
               <Card key={m.id}><CardBody>
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <Badge tone="warning">{m.reason}</Badge>
+                    <Badge variant="warning">{m.reason}</Badge>
                     <h3 className="font-medium mt-2">{m.title}</h3>
                     <p className="text-sm text-muted mt-1">{m.snippet}</p>
                   </div>

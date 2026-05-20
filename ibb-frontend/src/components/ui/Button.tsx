@@ -10,7 +10,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: Size;
   loading?: boolean;
   icon?: React.ReactNode;
-}
+} 
 
 const variants: Record<Variant, string> = {
   primary: "bg-brand text-brand-fg hover:opacity-90 shadow-glow-sm hover:shadow-glow-md active:scale-[0.98]",
