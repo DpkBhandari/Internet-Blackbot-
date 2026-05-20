@@ -1,0 +1,13 @@
+const router = require('express').Router();
+router.use('/auth', require('./auth.routes'));
+router.use('/uploads', require('./upload.routes'));
+router.use('/dashboard', require('./dashboard.routes'));
+router.use('/research', require('./research.routes'));
+router.use('/analyses', require('./analysis.routes'));
+router.use('/analysis', require('./analysis.routes'));
+router.use('/reports', require('./report.routes'));
+router.use('/notifications', require('./notification.routes'));
+router.use('/ai', require('./ai.routes'));
+router.use('/search', require('./search.routes'));
+router.use('/admin', require('./admin.routes'));
+module.exports = router;

@@ -1,0 +1,5 @@
+{"level":"info","message":"MongoDB connected: localhost","timestamp":"2026-05-20 16:58:53"}
+{"level":"info","message":"Redis connected","timestamp":"2026-05-20 16:58:53"}
+{"level":"info","message":"Socket.IO initialized","timestamp":"2026-05-20 16:58:53"}
+{"level":"info","message":"BullMQ workers started","timestamp":"2026-05-20 16:58:53"}
+{"level":"info","message":"IBB Backend running on port 5000 (development)","timestamp":"2026-05-20 16:58:53"}

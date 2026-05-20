@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+  ai:
+    build: .
+    env_file: .env
+    depends_on: [redis]
+    ports: ["8000:8000"]
+    volumes:
+      - ./.chroma:/app/.chroma
+      - hf_cache:/root/.cache/huggingface
+volumes:
+  hf_cache:

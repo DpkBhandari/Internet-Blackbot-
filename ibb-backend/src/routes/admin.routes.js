@@ -1,0 +1,15 @@
+const r = require('express').Router();
+const c = require('../controllers/admin.controller');
+const { authenticate, authorize } = require('../middlewares/auth');
+r.use(authenticate, authorize('admin'));
+r.get('/stats',          c.stats);
+r.get('/users',          c.listUsers);
+r.patch('/users/:id',    c.updateUser);
+r.delete('/users/:id',   c.deleteUser);
+r.get('/invites',        c.listInvites);
+r.post('/invites',       c.createInvite);
+r.delete('/invites/:id', c.revokeInvite);
+r.get('/logs',           c.logs);
+r.get('/health',         c.health);
+r.get('/analytics',      c.analytics);
+module.exports = r;

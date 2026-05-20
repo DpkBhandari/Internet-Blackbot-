@@ -1,0 +1,139 @@
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
+const path = require('path');
+const Report = require('../models/Report');
+const Analysis = require('../models/Analysis');
+const Source = require('../models/Source');
+const { emitToUser } = require('../sockets/index');
+const { EVENTS } = require('../config/constants');
+const logger = require('../utils/logger');
+
+const reportsDir = path.resolve(process.env.REPORTS_DIR || './reports');
+if (!fs.existsSync(reportsDir)) fs.mkdirSync(reportsDir, { recursive: true });
+
+async function generateReport({ analysisId, userId }) {
+  const analysis = await Analysis.findOne({ _id: analysisId })
+    .populate({ path: 'research', select: 'title fileName topic tags description' })
+    .lean();
+  if (!analysis) throw new Error('Analysis not found');
+
+  const sources = await Source.find({ analysis: analysisId }).sort('-credibilityScore').limit(20).lean();
+
+  let report = await Report.findOne({ analysis: analysisId, user: userId });
+  if (!report) {
+    report = await Report.create({ analysis: analysisId, user: userId, research: analysis.research?._id, status: 'GENERATING' });
+  } else {
+    report.status = 'GENERATING';
+    await report.save();
+  }
+
+  const filename = `report-${report._id}.pdf`;
+  const filePath = path.join(reportsDir, filename);
+
+  try {
+    await buildPDF(filePath, analysis, sources);
+    const stat = fs.statSync(filePath);
+    report.status = 'READY';
+    report.filePath = filePath;
+    report.fileSize = stat.size;
+    await report.save();
+    try { emitToUser(userId.toString(), EVENTS.REPORT_READY, { reportId: report._id }); } catch {}
+    logger.info(`Report generated: ${report._id} (${stat.size} bytes)`);
+    return report;
+  } catch (err) {
+    report.status = 'FAILED';
+    report.error = err.message;
+    await report.save();
+    logger.error(`Report generation failed: ${err.message}`);
+    throw err;
+  }
+}
+
+function buildPDF(outputPath, analysis, sources) {
+  return new Promise((resolve, reject) => {
+    const doc = new PDFDocument({ size: 'A4', margins: { top: 60, bottom: 60, left: 60, right: 60 } });
+    const stream = fs.createWriteStream(outputPath);
+    doc.pipe(stream);
+
+    const BRAND = '#4f46e5';
+    const MUTED = '#64748b';
+    const research = analysis.research || {};
+
+    // Header
+    doc.rect(0, 0, doc.page.width, 80).fill('#0a0a12');
+    doc.fill('white').fontSize(20).font('Helvetica-Bold').text('Internet Black Box', 60, 24);
+    doc.fill('#a5b4fc').fontSize(10).font('Helvetica').text('AI Research Intelligence Report', 60, 50);
+    doc.fill('white').fontSize(10).text(new Date().toLocaleDateString(), { align: 'right' }, 60, 50);
+
+    doc.moveDown(3);
+    doc.fill(BRAND).fontSize(18).font('Helvetica-Bold').text(research.title || research.fileName || 'Analysis Report');
+    if (research.topic) doc.fill(MUTED).fontSize(11).font('Helvetica').text(`Topic: ${research.topic}`);
+    doc.moveDown();
+
+    // Summary
+    if (analysis.summary) {
+      doc.fill('#1e1e2e').fontSize(13).font('Helvetica-Bold').text('Executive Summary');
+      doc.moveDown(0.3);
+      doc.fill('#374151').fontSize(10).font('Helvetica').text(analysis.summary, { lineGap: 4 });
+      doc.moveDown();
+    }
+
+    // Scores
+    doc.fill('#1e1e2e').fontSize(13).font('Helvetica-Bold').text('Analysis Scores');
+    doc.moveDown(0.3);
+    const scores = [
+      ['Credibility Score', `${Math.round((analysis.credibilityScore || 0) * 100)}%`],
+      ['Misinfo Risk', `${Math.round((analysis.misinformationScore || 0) * 100)}%`],
+      ['Sentiment', analysis.sentiment?.label || 'neutral'],
+      ['Toxicity', analysis.toxicity?.label || 'non-toxic'],
+    ];
+    scores.forEach(([k, v]) => {
+      doc.fill(MUTED).fontSize(10).font('Helvetica').text(`${k}: `, { continued: true });
+      doc.fill(BRAND).font('Helvetica-Bold').text(v);
+    });
+    doc.moveDown();
+
+    // Keywords
+    if (analysis.keywords?.length) {
+      doc.fill('#1e1e2e').fontSize(13).font('Helvetica-Bold').text('Key Terms');
+      doc.moveDown(0.3);
+      doc.fill(MUTED).fontSize(10).font('Helvetica').text(analysis.keywords.slice(0, 20).join(' · '));
+      doc.moveDown();
+    }
+
+    // Sources
+    if (sources.length) {
+      doc.fill('#1e1e2e').fontSize(13).font('Helvetica-Bold').text('Sources & References');
+      doc.moveDown(0.3);
+      sources.slice(0, 15).forEach((s, i) => {
+        doc.fill('#374151').fontSize(9).font('Helvetica-Bold').text(`${i + 1}. ${s.title || s.url || 'Source'}`);
+        if (s.url) doc.fill(BRAND).fontSize(8).font('Helvetica').text(s.url, { link: s.url });
+        if (s.snippet) doc.fill(MUTED).fontSize(9).font('Helvetica').text(s.snippet.slice(0, 200));
+        doc.fill(MUTED).fontSize(8).text(`Credibility: ${Math.round((s.credibilityScore || 0) * 100)}%`);
+        doc.moveDown(0.4);
+      });
+    }
+
+    // Footer
+    doc.on('pageAdded', () => {
+      doc.fill(MUTED).fontSize(8).text('Generated by Internet Black Box · ai-research.ibb', 60, doc.page.height - 40, { align: 'center' });
+    });
+
+    doc.end();
+    stream.on('finish', resolve);
+    stream.on('error', reject);
+  });
+}
+
+async function queueReport({ analysisId, userId }) {
+  const { getReportQueue } = require('../jobs/queues');
+  const q = getReportQueue();
+  if (!q) {
+    // No queue — generate synchronously in background
+    setImmediate(() => generateReport({ analysisId, userId }).catch(e => logger.warn(`Sync report gen failed: ${e.message}`)));
+    return;
+  }
+  await q.add('generate', { analysisId, userId }, { removeOnComplete: 50, removeOnFail: 50 });
+}
+
+module.exports = { generateReport, queueReport };
