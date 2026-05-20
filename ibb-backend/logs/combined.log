@@ -28,3 +28,8 @@
 {"level":"info","message":"Socket.IO initialized","timestamp":"2026-05-20 18:33:59"}
 {"level":"info","message":"BullMQ workers started","timestamp":"2026-05-20 18:33:59"}
 {"level":"info","message":"IBB Backend running on port 5000 (production)","timestamp":"2026-05-20 18:33:59"}
+{"level":"info","message":"MongoDB connected: ac-pqjikfh-shard-00-00.qlvsgkl.mongodb.net","timestamp":"2026-05-20 20:00:17"}
+{"level":"info","message":"Redis connected","timestamp":"2026-05-20 20:00:18"}
+{"level":"info","message":"Socket.IO initialized","timestamp":"2026-05-20 20:00:18"}
+{"level":"info","message":"BullMQ workers started","timestamp":"2026-05-20 20:00:18"}
+{"level":"info","message":"IBB Backend running on port 5000 (production)","timestamp":"2026-05-20 20:00:18"}
